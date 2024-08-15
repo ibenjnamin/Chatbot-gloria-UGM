@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página de Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container-fluid login-container">
+    <div class="row h-100">
+      <div class="col-md-6 left-side">
+        <img src="/imagenes/Logo.png" alt="Logo" class="logo" />
+        <h1>¡Bienvenidos a nuestra Plataforma UGM!</h1>
+        <p>
+          LA MENTE NO DOMINA AL CUERPO, SINO QUE SE CONVIERTE EN CUERPO.
+          <span>CUERPO Y MENTE SON UNA SOLA COSA</span>
+        </p>
+      </div>
+      <div class="col-md-6 right-side d-flex align-items-center">
+        <div class="login-form">
+          <h2>Iniciar sesión</h2>
+          <form id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input style="background: rgba(130, 130, 130, 0.2)" type="email" class="form-control" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input style="background: rgba(130, 130, 130, 0.2)" type="password" class="form-control" id="password" name="password" required />
+            </div>
+            <button type="submit" class="btn btn-secondary">Entrar</button>
+        </form>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

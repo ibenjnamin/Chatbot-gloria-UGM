@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Simulaciones IA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
+
+        body {
+            margin: 0;
+            font-family: "Open Sans";
+            background-color: #f4f4f4;
+        }
+        .left-side {
+            background-color: #000000; /* Color de fondo del lado izquierdo */
+            width: 360px;
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px; /* Espacio superior para centrar la imagen */
+        }
+
+        .left-side img {
+            width: 190px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .nbvar {
+            margin-top: 90px;
+        }
+
+        .inicio,
+        .conversacion,
+        .paciente,
+        .historial,
+        .plantilla,
+        .evaluacion {
+            width: 200px;
+            height: 40px;
+            margin-top: 20px;
+            border-radius: 5px 0px 0px 0px;
+            opacity: 0px;
+        }
+
+        .inicio a,
+        .conversacion a,
+        .paciente a,
+        .historial a,
+        .plantilla a,
+        .evaluacion a {
+            width: auto;
+            height: 14px;
+            top: 15px;
+            left: 48px;
+            gap: 0px;
+            opacity: 0px;
+            font-family: "Open Sans";
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 13.62px;
+            text-align: left;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .inicio img,
+        .conversacion img,
+        .paciente img,
+        .historial img,
+        .plantilla img,
+        .evaluacion img {
+            width: 30px;
+            height: 30px;
+            margin-top: 15px;
+            left: 16px;
+            padding: 3.44px 2px 4px 2px;
+            gap: 0px;
+            opacity: 0px;
+        }
+
+        .header {
+            background-color: #000;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header .logo {
+            margin-left: 50px;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 17px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-button {
+            margin-left: auto;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .content h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .table-container {
+            margin-top: 50px;
+            width: 80%;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            table-layout: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead th {
+            color: #000000;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+
+
+
+
+        .table th,
+        .table td {
+            border: 1px solid #000;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table td img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination-container a {
+            text-decoration: none;
+            width: 91px;
+            height: 36px;
+            display: inline-block;
+            text-align: center;
+            line-height: 36px;
+            border: 1px solid #555;
+            color: #000;
+            border-radius: 5px;
+        }
+
+        .pagination-container span {
+            font-size: 18px;
+        }
+
+        .sya a {
+            color: #000;
+            text-decoration: none;
+            height: 36px;
+            text-align: center;
+            align-items: center;
+            font-size: 18px;
+            width: 100px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #e2e0e0;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            max-width: 600px;
+            border-radius: 10px;
+            max-height: 70vh; /* Limita la altura máxima del modal */
+            overflow-y: auto; /* Habilita el scroll vertical si es necesario */
+        }
+
+        .close {
+            color: #000;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .modal h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal ul li {
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal ul li img {
+            cursor: pointer;
+        }
+
+        .modal ul li hr {
+            width: 100%;
+            margin: 10px 0;
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Lado Izquierdo -->
+            <div class="col-md-3 left-side">
+                <img style="margin-top: 20px" src="../imagenes/Logo.png" alt="Logo" />
+                <!-- Enlaces -->
+                <div class="nbvar">
+                    <div class="inicio">
+                        <a href="../alumno/home.ejs">
+                            <img src="../imagenes/inicio.png" alt="Inicio" />Inicio
+                        </a>
+                    </div>
+                    <div class="conversacion">
+                        <a href="../alumno/chat.html">
+                            <img src="../imagenes/conversacion.png" alt="Conversación" />Conversación
+                        </a>
+                    </div>
+                    <div class="paciente">
+                        <a href="/paciente.html">
+                            <img src="../imagenes/paciente.png" alt="Paciente" />Paciente IA
+                        </a>
+                    </div>
+                    <div class="historial">
+                        <a href="../alumno/historial.html">
+                            <img src="../imagenes/historial.png" alt="Historial" />Historial
+                        </a>
+                    </div>
+                    <div class="plantilla">
+                        <a href="/plantilla.html">
+                            <img src="../imagenes/plantilla.png" alt="Plantilla" />Plantilla
+                        </a>
+                    </div>
+                    <div class="evaluacion">
+                        <a href="../alumno/evaluacion.html">
+                            <img src="../imagenes/evaluacionf.png" alt="Evaluación" />Evaluación
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9 container table-container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Categoria</th>
+                            <th>interacciones</th>
+                            <th>status</th>
+                            <th>fichas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rosa Altamirano</td>
+                            <td>Depresion Mayor</td>
+                            <td>1</td>
+                            <td>Activo</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Camila Díaz</td>
+                            <td>Trastorno Ansioso</td>
+                            <td>20</td>
+                            <td>Activo</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kevin Rosales</td>
+                            <td>Esquizofrenia</td>
+                            <td>3</td>
+                            <td>De Alta</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aurora Mesa</td>
+                            <td>Abuso y dependencia de sustancia</td>
+                            <td>5</td>
+                            <td>Activo</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Samuel Lopez</td>
+                            <td>Crisis Vital</td>
+                            <td>9</td>
+                            <td>Activo</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paciente Rosa Altamirano</td>
+                            <td>Crisis Vital</td>
+                            <td>5</td>
+                            <td>De alta</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paciente Rosa Altamirano</td>
+                            <td>Esquizofrenia</td>
+                            <td>7</td>
+                            <td>De alta</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paciente Rosa Altamirano</td>
+                            <td>Trastorno Ansioso</td>
+                            <td>12</td>
+                            <td>Activo</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paciente Rosa Altamirano</td>
+                            <td>Depresion Mayor</td>
+                            <td>5</td>
+                            <td>De alta</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paciente Rosa Altamirano</td>
+                            <td>Abuso y Dependencia de Sustancias</td>
+                            <td>2</td>
+                            <td>Activos</td>
+                            <td>
+                                <a href="#" class="view-button"><img src="../imagenes/fichas-a.png" alt="Ver" /></a>
+                            </td>
+                        </tr>
+                        <!-- Agrega más filas según sea necesario -->
+                    </tbody>
+                </table>
+                <div class="pagination-container sya">
+                    <a style="text-decoration: none; width: 91px; height: 36px" href="#">Anterior</a>
+                    <span>página 1 de 10</span>
+                    <a href="#">Siguiente</a>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Fichas Clínicas</h2>
+                    <ul>
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+               
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        <hr /> 
+                        <li>
+                            
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        <hr />
+                        <li>
+                            <span>Ficha 10/08/2024</span>
+                            <img src="../imagenes/veeer.png" alt="">
+             
+                        </li>
+                        
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtener el modal
+        var modal = document.getElementById("myModal");
+    
+        // Obtener el elemento <span> que cierra el modal
+        var span = document.getElementsByClassName("close")[0];
+    
+        // Cuando el usuario hace clic en el botón, abre el modal
+        var viewButtons = document.querySelectorAll(".view-button");
+        viewButtons.forEach(function (button) {
+            button.onclick = function () {
+                modal.style.display = "block";
+            };
+        });
+    
+        // Cuando el usuario hace clic en <span> (x), cierra el modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+    
+        // Cuando el usuario hace clic en cualquier lugar fuera del modal, lo cierra
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Simulaciones IA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
+
+      body {
+        margin: 0;
+        font-family: "Open Sans";
+        background-color: #f4f4f4;
+      }
+      .header {
+        background-color: #000;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+      .header .logo {
+        margin-left: 50px;
+      }
+      .nav-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 17px;
+      }
+      .nav-links a:hover {
+        text-decoration: underline;
+      }
+      .profile-button {
+        margin-left: auto;
+      }
+      .content {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .content h2 {
+        margin-left: 13px;
+        margin-top: 348px;
+      }
+      .content p {
+        font-size: 18px;
+        color: #000;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <img src="../imagenes/logo.png" alt="Logo" class="logo" width="163" height="43" />
+      <nav class="nav-links">
+        <a href="../docente/prof.ejs">Inicio</a>
+        <a href="../docente/p_alum.html">Alumnos</a>
+        <a href="../docente/p_est.html">Estadísticas</a>
+      </nav>
+      <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;" href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;" src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
+    </header>
+
+    <div class="content">
+      <h2>Hola <%= nombre %></h2>
+      <p>Bienvenido nuevamente, no te vemos desde el 20.07.2024</p>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js" integrity="sha384-vlAigWd8j47Vq1a0d4N7puI1oG8o14Uj7l5HdHx18ZD1hLsjk1bEkhgYFgi+qEAI" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-+0n0xVW2eSR5RvJ8tKuI79Pq5S2GfeQ8S9bAPtKG5Kk9giq/zTpXQJqtxAuP4+vn" crossorigin="anonymous"></script>
+</html>

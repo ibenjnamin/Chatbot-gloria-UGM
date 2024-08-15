@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
+
+        .left-side {
+            background-color: #000000;
+            /* Color de fondo del lado izquierdo */
+            width: 360px;
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            /* Espacio superior para centrar la imagen */
+        }
+
+        .left-side img {
+            width: 190px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .nbvar {
+            margin-top: 90px;
+        }
+
+        .inicio,
+        .conversacion,
+        .paciente,
+        .historial,
+        .plantilla,
+        .evaluacion {
+            width: 200px;
+            height: 40px;
+            margin-top: 20px;
+            border-radius: 5px 0px 0px 0px;
+            opacity: 0px;
+        }
+
+        .inicio a,
+        .conversacion a,
+        .paciente a,
+        .historial a,
+        .plantilla a,
+        .evaluacion a {
+            width: auto;
+            height: 14px;
+            top: 15px;
+            left: 48px;
+            gap: 0px;
+            opacity: 0px;
+            font-family: "Open Sans";
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 13.62px;
+            text-align: left;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .inicio img,
+        .conversacion img,
+        .paciente img,
+        .historial img,
+        .plantilla img,
+        .evaluacion img {
+            width: 30px;
+            height: 30px;
+            margin-top: 15px;
+            left: 16px;
+            padding: 3.44px 2px 4px 2px;
+            gap: 0px;
+            opacity: 0px;
+        }
+
+        .bienvenida {
+            height: 43px;
+            margin-top: 139px;
+            gap: 0px;
+            opacity: 0px;
+            font-family: "Roboto Slab";
+            font-size: 35px;
+            font-weight: 400;
+            line-height: 36.93px;
+            text-align: left;
+        }
+
+        .hacerhoy {
+            height: 43px;
+            margin-top: 10px;
+            gap: 0px;
+            opacity: 0px;
+            font-family: "Roboto Slab";
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 36.93px;
+        }
+
+        .bienvenida span {
+            font-family: "Roboto Slab";
+            font-size: 35px;
+            font-weight: 700;
+            line-height: 36.93px;
+            text-align: left;
+        }
+
+        .explicacion {
+            height: 67px;
+            margin-top: 100px;
+            gap: 0px;
+            opacity: 0px;
+            text-align: center;
+            font-family: "Open Sans";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19.07px;
+            text-align: center;
+        }
+
+        .caja {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .box {
+            width: 250px;
+            height: 264px;
+            background-color: rgba(217, 217, 217, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            padding: 20px;
+        }
+
+        .box h3 {
+            margin-top: -10px;
+            text-align: center;
+            width: 100%;
+            font-family: "Open Sans";
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 21.79px;
+            margin-bottom: 20px;
+        }
+
+        .box p {
+            text-align: center;
+            font-family: "Open Sans";
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19.07px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Lado Izquierdo -->
+            <div class="col-md-3 left-side">
+                <img style="margin-top: 20px" src="../imagenes/Logo.png" alt="Logo" />
+                <!-- Enlaces -->
+                <div class="nbvar">
+                    <div class="inicio">
+                        <a href="../alumno/home.ejs">
+                            <img src="../imagenes/inicio.png" alt="Inicio" />Inicio
+                        </a>
+                    </div>
+                    <div class="conversacion">
+                        <a href="../alumno/chat.html">
+                            <img src="../imagenes/conversacion.png" alt="Conversación" />Conversación
+                        </a>
+                    </div>
+                    <div class="paciente">
+                        <a href="/paciente.html">
+                            <img src="../imagenes/paciente.png" alt="Paciente" />Paciente IA
+                        </a>
+                    </div>
+                    <div class="historial">
+                        <a href="../alumno/historial.html">
+                            <img src="../imagenes/historial.png" alt="Historial" />Historial
+                        </a>
+                    </div>
+                    <div class="plantilla">
+                        <a href="/plantilla.html">
+                            <img src="../imagenes/plantilla.png" alt="Plantilla" />Plantilla
+                        </a>
+                    </div>
+                    <div class="evaluacion">
+                        <a href="../alumno/evaluacion.html">
+                            <img src="../imagenes/evaluacionf.png" alt="Evaluación" />Evaluación
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido -->
+            <div class="col-md-9 d-flex flex-column align-items-center justify-content-center">
+                <h1 class="bienvenida">
+                    Bienvenido(a), <span>
+                        <%= nombre %>
+                    </span>
+                </h1>
+                <div class="container" style="max-width: 700px;">
+                    <p style="text-align: center; margin-top: 50px; font-family: 'Open Sans'; font-size: 13;">Hola aquí,
+                        tendrás la oportunidad de interactuar con una
+                        inteligencia artificial avanzada diseñada para simular sesiones de terapia y explorar diversas
+                        facetas de la psicología.</p>
+
+                    <div class="hacerhoy">
+                        <h2 style="text-align: center;">¿Que quieres hacer hoy?</h2>
+                    </div>
+                </div>
+                <div class="caja">
+                    <div class="box">
+                        <h3>Continuar ultima conversación realizada</h3>
+                        <p>
+                            Interactúa con perfiles de pacientes cuidadosamente diseñados que presentan una variedad de
+                            temas y trastornos.
+                        </p>
+                    </div>
+                    <div class="box">
+                        <h3>iniciar nueva cita con pacientes fichados </h3>
+                        <p>
+                            Mejora tus habilidades terapéuticas mediante sesiones simuladas con nuestra IA, ajustada
+                            para reflejar diferentes enfoques y estilos de terapia.
+                        </p>
+                    </div>
+                    <div class="box">
+                        <h3>Iniciar una conversación con paciente al azar</h3>
+                        <p>
+                            Recibe comentarios detallados y análisis de tus interacciones para ayudarte a crecer y
+                            aprender.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Archivos JS de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
