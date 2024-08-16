@@ -156,6 +156,73 @@
       input:checked + .slider:before {
         transform: translateX(26px);
       }
+
+      .select-role {
+        margin-top: 5px;
+        width: 100%;
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 20px;
+        background-color: #B5B5B5;
+      }
+      .select-role-up {
+        margin-top: 10px;
+        width: 20%;
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        background-color: #B5B5B5;
+        color: #fff;
+        margin-right: 350px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .button-container button {
+        margin-right: 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+
+      .button-container input[type="text"] {
+        margin-left: 20px;
+        padding: 5px;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      /* Estilos para el modal */
+      .modal-header {
+        position: relative;
+        left: 110px;
+        top: 19px;
+        border-bottom: none;
+      }
+
+      .modal-content {
+        width: 393px;
+        height: 303px;
+        border-radius: 20px;
+        background-color: #b5b5b5;
+      }
+
+      .modal-body input {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
     </style>
   </head>
   <body>
@@ -168,7 +235,20 @@
         <a href="../admin/e_admin.html">Estadísticas</a>
       </nav>
       <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;" href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;" src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
-    </header>>
+    </header>
+
+    <div class="container button-container">
+      <select class="select-role-up">
+        <option value="estudiante">Estudiante</option>
+        <option value="docente">Docente</option>
+        <option value="todos">Todos</option>
+      </select>
+      <button type="button" data-toggle="modal" data-target="#addUserModal">
+        Agregar usuario
+      </button>
+      <button>Carga Masiva</button>
+      <input type="text" placeholder="Buscar usuario..." />
+    </div>
 
     <div class="container table-container">
       <table class="table table-striped">
@@ -176,8 +256,8 @@
           <tr>
             <th>Usuario</th>
             <th>Correo</th>
-            <th>Universidad</th>
-            <th>Ingresos</th>
+            <th>Rol</th>
+            <th>Establecimiento</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -185,8 +265,13 @@
           <tr>
             <td>Rosa Altamirano</td>
             <td>rosa@gmail.com</td>
-            <td>UGM</td>
-            <td>0</td>
+            <td>
+              <select class="select-role">
+                <option value="estudiante">Estudiante</option>
+                <option value="docente">Docente</option>
+              </select>
+            </td>
+            <td>Universidad Gabriela Mistral</td>
             <td>
               <label class="switch">
                 <input type="checkbox" checked />
@@ -197,8 +282,13 @@
           <tr>
             <td>Camila Díaz</td>
             <td>renee@gmail.com</td>
-            <td>UGM</td>
-            <td>0</td>
+            <td>
+              <select class="select-role">
+                <option value="estudiante">Estudiante</option>
+                <option value="docente">Docente</option>
+              </select>
+            </td>
+            <td>Universidad Gabriela Mistral</td>
             <td>
               <label class="switch">
                 <input type="checkbox" />
@@ -217,7 +307,31 @@
         <a href="#">Siguiente</a>
       </div>
     </div>
-
+        <!-- Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel" style="text-align: center; color: #fff;">Agregar usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input type="text" placeholder="Nomrbre"/>
+                <input type="email" placeholder="Correo" />
+                <select class="select-role">
+                  <option value="estudiante">Estudiante</option>
+                  <option value="docente">Docente</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" style="width: 115px; height: 38px; border-radius: 20px; background-color: #CACACA; color: #000;"  data-dismiss="modal">Cancelar</button>
+                <button type="button" style="width: 115px; height: 38px; border-radius: 20px; background-color: #000; color: #fff;" >Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
