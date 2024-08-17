@@ -1,339 +1,405 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plataforma Simulaciones IA</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
 
-      body {
-        margin: 0;
-        font-family: "Open Sans";
-        background-color: #f4f4f4;
-      }
-      .header {
-        background-color: #000;
-        color: white;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-      }
-      .header .logo {
-        margin-left: 50px;
-      }
-      .nav-links {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-      }
-      .nav-links a {
-        color: white;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 17px;
-      }
-      .nav-links a:hover {
-        text-decoration: underline;
-      }
-      .profile-button {
-        margin-left: auto;
-      }
-      .content {
-        text-align: center;
-        margin-top: 50px;
-      }
-      .content h2 {
-        font-size: 32px;
-        margin-bottom: 10px;
-      }
-      .content p {
-        font-size: 18px;
-        color: #555;
-      }
-      .table-container {
-        margin-top: 50px;
-        width: 80%;
-      }
-      .table thead th {
-        background-color: #222;
-        color: white;
-        border-radius: 5px 5px 0 0;
-      }
-      .table tbody tr {
-        background-color: #bdbaba;
-      }
-      .table tbody tr:hover {
-        background-color: #f1f1f1;
-      }
-      .table th,
-      .table td {
-        border: 1px solid #ddd !important;
-      }
-      .pagination-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
-        width: 100%;
-        margin-left: 0px;
-      }
-      .pagination-container a {
-            text-decoration: none;
-            width: 91px;
-            height: 36px;
-            display: inline-block;
-            text-align: center;
-            line-height: 36px;
-            border: 1px solid #555;
-            color: #000;
-            border-radius: 5px;
-        }
-        .pagination-container span {
-            font-size: 18px;
-        }
-        .sya a {
-            color: #000;
-            text-decoration: none;
-            height: 36px;
-            text-align: center;
-            align-items: center;
-            font-size: 18px;
-            width: 100px;
-        }
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-      }
-      .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-      .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: 0.4s;
-        border-radius: 34px;
-      }
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: 0.4s;
-        border-radius: 50%;
-      }
-      input:checked + .slider {
-        background-color: #2196f3;
-      }
-      input:checked + .slider:before {
-        transform: translateX(26px);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma Simulaciones IA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
 
-      .select-role {
-        margin-top: 5px;
-        width: 100%;
-        padding: 5px;
-        font-size: 14px;
-        border-radius: 20px;
-        background-color: #B5B5B5;
-      }
-      .select-role-up {
-        margin-top: 10px;
-        width: 20%;
-        padding: 5px;
-        font-size: 14px;
-        border-radius: 5px;
-        background-color: #B5B5B5;
-        color: #fff;
-        margin-right: 350px;
-      }
+    body {
+      margin: 0;
+      font-family: "Open Sans";
+      background-color: #f4f4f4;
+    }
 
-      .button-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-      }
+    .header {
+      background-color: #000;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
 
-      .button-container button {
-        margin-right: 10px;
-        padding: 10px 20px;
-        border-radius: 5px;
-      }
+    .header .logo {
+      margin-left: 50px;
+    }
 
-      .button-container input[type="text"] {
-        margin-left: 20px;
-        padding: 5px;
-        border-radius: 5px;
-        width: 200px;
-      }
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
 
-      /* Estilos para el modal */
-      .modal-header {
-        position: relative;
-        left: 110px;
-        top: 19px;
-        border-bottom: none;
-      }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 17px;
+    }
 
-      .modal-content {
-        width: 393px;
-        height: 303px;
-        border-radius: 20px;
-        background-color: #b5b5b5;
-      }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
 
-      .modal-body input {
-        width: 100%;
-        margin-bottom: 15px;
-        padding: 5px;
-        border-radius: 5px;
-      }
+    .profile-button {
+      margin-left: auto;
+    }
 
-      .modal-footer {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <header class="header">
-      <img src="../imagenes/logo.png" alt="Logo" class="logo" width="163" height="43" />
-      <nav class="nav-links">
-        <a href="../admin/admin.ejs">Inicio</a>
-        <a href="../admin/u_admin.html">Usuarios</a>
-        <a href="../admin/s_admin.html">Secciones</a>
-        <a href="../admin/e_admin.html">Estadísticas</a>
-      </nav>
-      <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;" href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;" src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
-    </header>
+    .content {
+      text-align: center;
+      margin-top: 50px;
+    }
 
-    <div class="container button-container">
-      <select class="select-role-up">
-        <option value="estudiante">Estudiante</option>
-        <option value="docente">Docente</option>
-        <option value="todos">Todos</option>
-      </select>
-      <button type="button" data-toggle="modal" data-target="#addUserModal">
-        Agregar usuario
-      </button>
-      <button>Carga Masiva</button>
-      <input type="text" placeholder="Buscar usuario..." />
+    .content h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .table-container {
+      margin-top: 50px;
+      width: 80%;
+    }
+
+    .table thead th {
+      background-color: #222;
+      color: white;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .table tbody tr {
+      background-color: #bdbaba;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .table th,
+    .table td {
+      border: 1px solid #ddd !important;
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      width: 100%;
+      margin-left: 0px;
+    }
+
+    .pagination-container a {
+      text-decoration: none;
+      width: 91px;
+      height: 36px;
+      display: inline-block;
+      text-align: center;
+      line-height: 36px;
+      border: 1px solid #555;
+      color: #000;
+      border-radius: 5px;
+    }
+
+    .pagination-container span {
+      font-size: 18px;
+    }
+
+    .sya a {
+      color: #000;
+      text-decoration: none;
+      height: 36px;
+      text-align: center;
+      align-items: center;
+      font-size: 18px;
+      width: 100px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #2196f3;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .select-role {
+      margin-top: 5px;
+      width: 100%;
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 20px;
+      background-color: #B5B5B5;
+      color: #fff;
+    }
+
+    .select-role-up {
+      margin-top: 10px;
+      width: 20%;
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 5px;
+      background-color: #B5B5B5;
+      color: #fff;
+      margin-right: 350px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .button-container input[type="text"] {
+      margin-left: 20px;
+      padding: 5px;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    /* Estilos para el modal */
+    .modal-header {
+      position: relative;
+      left: 110px;
+      top: 19px;
+      border-bottom: none;
+    }
+
+    .modal-content {
+      width: 393px;
+      height: 400px;
+      border-radius: 20px;
+      background-color: #b5b5b5;
+    }
+
+    .modal-body input {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .cancel-button,
+    .save-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .cancel-button {
+      background-color: #cacaca;
+      color: #000;
+    }
+
+    .save-button {
+      background-color: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <img src="../imagenes/logo.png" alt="Logo" class="logo" width="163" height="43" />
+    <nav class="nav-links">
+      <a href="../admin/admin.ejs">Inicio</a>
+      <a href="../admin/u_admin.html">Usuarios</a>
+      <a href="../admin/s_admin.html">Secciones</a>
+      <a href="../admin/e_admin.html">Estadísticas</a>
+    </nav>
+    <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;"
+      href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;"
+        src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
+  </header>
+
+  <div class="container button-container">
+    <select class="select-role-up">
+      <option value="estudiante">Estudiante</option>
+      <option value="docente">Docente</option>
+      <option value="todos">Todos</option>
+    </select>
+    <button type="button" data-toggle="modal" data-target="#addUserModal">
+      Agregar usuario
+    </button>
+    <button>Carga Masiva</button>
+    <input type="text" placeholder="Buscar usuario..." />
+  </div>
+
+  <div class="container table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Rol</th>
+          <th>Establecimiento</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rosa Altamirano</td>
+          <td>rosa@gmail.com</td>
+          <td>
+            <select class="select-role">
+              <option value="estudiante">Estudiante</option>
+              <option value="docente">Docente</option>
+            </select>
+          </td>
+          <td>Universidad Gabriela Mistral</td>
+          <td>
+            <label class="switch">
+              <input type="checkbox" checked />
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Camila Díaz</td>
+          <td>renee@gmail.com</td>
+          <td>
+            <select class="select-role">
+              <option value="estudiante">Estudiante</option>
+              <option value="docente">Docente</option>
+            </select>
+          </td>
+          <td>Universidad Gabriela Mistral</td>
+          <td>
+            <label class="switch">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+        <!-- Agrega más filas según sea necesario -->
+      </tbody>
+    </table>
+    <div class="pagination-container sya">
+      <a style="text-decoration: none; width: 91px; height: 36px" href="#">Anterior</a>
+      <span>página 1 de 10</span>
+      <a href="#">Siguiente</a>
     </div>
+  </div>
+  <!-- Modal de agregar usuario -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #fff;">Agregar Usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="addUserForm" method="POST" action="/add-user">
+            <div class="form-group">
+              <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Nombre">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="correo" name="correo" required placeholder="Correo">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="password" name="contraseña" required
+                placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+              <label for="rol" style="color: #fff;">Rol</label>
+              <select style="background-color: #4D4C4C;" class="select-role" id="rol" name="rol" required>
+                <option value="student" style="color: #fff;" >Estudiante</option>
+                <option value="teacher"style="color: #fff;">Docente</option>
+              </select>
+            </div>
+            <div class="button-container">
+              <button type="button" class="cancel-button">Cancelar</button>
+              <button type="submit" class="save-button">Guardar</button>
+            </div>
 
-    <div class="container table-container">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Correo</th>
-            <th>Rol</th>
-            <th>Establecimiento</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Rosa Altamirano</td>
-            <td>rosa@gmail.com</td>
-            <td>
-              <select class="select-role">
-                <option value="estudiante">Estudiante</option>
-                <option value="docente">Docente</option>
-              </select>
-            </td>
-            <td>Universidad Gabriela Mistral</td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td>Camila Díaz</td>
-            <td>renee@gmail.com</td>
-            <td>
-              <select class="select-role">
-                <option value="estudiante">Estudiante</option>
-                <option value="docente">Docente</option>
-              </select>
-            </td>
-            <td>Universidad Gabriela Mistral</td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" />
-                <span class="slider"></span>
-              </label>
-            </td>
-          </tr>
-          <!-- Agrega más filas según sea necesario -->
-        </tbody>
-      </table>
-      <div class="pagination-container sya">
-        <a style="text-decoration: none; width: 91px; height: 36px" href="#"
-          >Anterior</a
-        >
-        <span>página 1 de 10</span>
-        <a href="#">Siguiente</a>
+          </form>
+        </div>
       </div>
     </div>
-        <!-- Modal -->
-        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel" style="text-align: center; color: #fff;">Agregar usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <input type="text" placeholder="Nomrbre"/>
-                <input type="email" placeholder="Correo" />
-                <select class="select-role">
-                  <option value="estudiante">Estudiante</option>
-                  <option value="docente">Docente</option>
-                </select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" style="width: 115px; height: 38px; border-radius: 20px; background-color: #CACACA; color: #000;"  data-dismiss="modal">Cancelar</button>
-                <button type="button" style="width: 115px; height: 38px; border-radius: 20px; background-color: #000; color: #fff;" >Guardar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>

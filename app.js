@@ -127,6 +127,60 @@ app.get('/docente/prof', (req, res) => {
     });
 });
 
+// Ruta para manejar la inserción de nuevos usuarios
+app.post('/add-user', (req, res) => {
+    const { nombre, correo, contraseña, rol } = req.body;
+
+    if (!nombre || !correo || !contraseña || !rol) {
+        return res.status(400).send('Todos los campos son requeridos');
+    }
+
+    let table = '';
+    if (rol === 'student') {
+        table = 'alumnos';
+    } else if (rol === 'teacher') {
+        table = 'docentes';
+    } else if (rol === 'admin') {
+        table = 'administradores';
+    } else {
+        return res.status(400).send('Rol no válido');
+    }
+
+    // Verifica si el usuario ya existe
+    const checkQuery = `SELECT * FROM ${table} WHERE correo = ?`;
+    connection.query(checkQuery, [correo], (err, results) => {
+        if (err) {
+            console.error('Error al verificar el usuario:', err);
+            return res.status(500).send('Error al verificar el usuario');
+        } 
+        
+        // Si el usuario ya existe, muestra un mensaje de error
+        if (results.length > 0) {
+            return res.status(409).send('El usuario ya existe');
+        }
+
+        // Inserta el nuevo usuario
+        const insertQuery = `INSERT INTO ${table} (nombre, correo, contraseña) VALUES (?, ?, ?)`;
+        connection.query(insertQuery, [nombre, correo, contraseña], (err) => {
+            if (err) {
+                console.error('Error al insertar el nuevo usuario:', err);
+                return res.status(500).send('Error al insertar el usuario');
+            }
+            
+            // Redirige a la página deseada
+            res.redirect('/admin/u_admin.html');
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
 app.get('/admin/admin', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/');
