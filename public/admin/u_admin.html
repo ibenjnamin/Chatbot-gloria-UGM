@@ -296,7 +296,7 @@
       Agregar usuario
     </button>
     <button>Carga Masiva</button>
-    <input type="text" placeholder="Buscar usuario..." />
+    <input type="text" id="search" placeholder="Buscar por usuario o correo...">
   </div>
 
   <div class="container table-container">
@@ -310,7 +310,7 @@
           <th>Estado</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="data-table">
         <tr>
           <td>Rosa Altamirano</td>
           <td>rosa@gmail.com</td>
@@ -380,8 +380,8 @@
             <div class="form-group">
               <label for="rol" style="color: #fff;">Rol</label>
               <select style="background-color: #4D4C4C;" class="select-role" id="rol" name="rol" required>
-                <option value="student" style="color: #fff;" >Estudiante</option>
-                <option value="teacher"style="color: #fff;">Docente</option>
+                <option value="student" style="color: #fff;">Estudiante</option>
+                <option value="teacher" style="color: #fff;">Docente</option>
               </select>
             </div>
             <div class="button-container">
@@ -400,6 +400,23 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#data-table tr');
+        
+        rows.forEach(row => {
+            const user = row.cells[0].textContent.toLowerCase();
+            const email = row.cells[1].textContent.toLowerCase();
+            
+            if (user.includes(searchValue) || email.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
