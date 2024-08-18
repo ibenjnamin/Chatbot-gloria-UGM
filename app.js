@@ -5,17 +5,18 @@ const cors = require('cors');
 const session = require('express-session');
 const { authenticate } = require('./routes/auth');
 const connection = require('./layout/config');
-const axios = require('axios'); // Añade esta línea al principio del archivo
+const axios = require('axios');
 
 const app = express();
 const port = 3000;
 
 // Configura tu API Key aquí
-const OPENAI_API_KEY = 'sk-proj-tL4vs4CwQg38LS92aHt5T3BlbkFJ3bmgAIw5ZDgIRueMbUam';
+//const OPENAI_API_KEY = 'sk-proj-tL4vs4CwQg38LS92aHt5T3BlbkFJ3bmgAIw5ZDgIRueMbUam';
 
 // Configurar el motor de vistas EJS
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'public'));
+app.set('views', path.join(__dirname, 'views'));
+
 
 // Configuración de archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,6 +62,7 @@ app.get('/alumno/home', (req, res) => {
 
     const { email, tipo } = req.session.user;
 
+    // Consulta para obtener el nombre del usuario
     const queryMap = {
         student: 'SELECT nombre FROM alumnos WHERE correo = ?',
         teacher: 'SELECT nombre FROM docentes WHERE correo = ?',
@@ -72,33 +74,49 @@ app.get('/alumno/home', (req, res) => {
     connection.query(query, [email], (err, results) => {
         if (err) {
             console.error('Error obteniendo el nombre del usuario:', err);
-            res.status(500).send('Error del servidor');
+            return res.status(500).send('Error del servidor');
+        }
+        
+        if (results.length > 0) {
+            const nombre = results[0].nombre;
+            res.render('alumno/home', { email, tipo, nombre });
         } else {
-            if (results.length > 0) {
-                const nombre = results[0].nombre;
-                let viewName = '';
-                switch (tipo) {
-                    case 'student':
-                        viewName = 'alumno/home';
-                        break;
-                    case 'teacher':
-                        viewName = 'docente/prof';
-                        break;
-                    case 'admin':
-                        viewName = 'admin/admin';
-                        break;
-                    default:
-                        return res.status(500).send('Tipo de usuario no reconocido');
-                }
-                res.render(viewName, { email, tipo, nombre });
-            } else {
-                res.status(404).send('Usuario no encontrado');
-            }
+            res.status(404).send('Usuario no encontrado');
         }
     });
 });
 
+app.get('/alumno/chat', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+    res.render('alumno/chat', { email, tipo });
+});
+
+// Ruta para la vista de historial
+app.get('/alumno/historial', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+    res.render('alumno/historial', { email, tipo });
+});
+
+// Ruta para la vista de evaluación
+app.get('/alumno/evaluacion', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+    res.render('alumno/evaluacion', { email, tipo });
+});
+
 // Nuevas rutas para los tipos de usuario
+// Ruta para la vista de profesor
 app.get('/docente/prof', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/');
@@ -126,6 +144,252 @@ app.get('/docente/prof', (req, res) => {
         }
     });
 });
+
+// Ruta para la vista de panel de alumnos
+app.get('/docente/p_alum', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'teacher') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Consultar los datos de los alumnos desde la base de datos
+    const query = 'SELECT id, nombre, correo FROM alumnos'; // Solo selecciona los campos necesarios
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error obteniendo los datos de los alumnos:', err);
+            return res.status(500).send('Error del servidor');
+        }
+
+        res.render('docente/p_alum', { email, tipo, alumnos: results });
+    });
+});
+
+
+// Ruta para la vista de panel de estadísticas
+app.get('/docente/p_est', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'teacher') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Consultar los datos de los alumnos desde la base de datos
+    const query = 'SELECT nombre FROM alumnos'; // Solo selecciona los campos necesarios
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error obteniendo los datos de los alumnos:', err);
+            return res.status(500).send('Error del servidor');
+        }
+
+        res.render('docente/p_est', { email, tipo, alumnos: results });
+    });
+});
+
+// Ruta para la vista principal del administrador
+app.get('/admin', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'admin') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Puedes obtener datos adicionales para mostrar en la vista, si es necesario
+    const query = 'SELECT nombre FROM administradores WHERE correo = ?';
+    connection.query(query, [email], (err, results) => {
+        if (err) {
+            console.error('Error obteniendo el nombre del administrador:', err);
+            return res.status(500).send('Error del servidor');
+        }
+
+        if (results.length > 0) {
+            const nombre = results[0].nombre;
+            res.render('admin/admin', { email, tipo, nombre });
+        } else {
+            res.status(404).send('Administrador no encontrado');
+        }
+    });
+});
+
+
+// Ruta para la vista de gestión de usuarios en el administrador
+app.get('/admin/u_admin', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'admin') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Consulta para obtener los datos de alumnos y docentes
+    const queryAlumnos = 'SELECT nombre AS usuario, correo, rol, bloqueado FROM alumnos';
+    const queryDocentes = 'SELECT nombre AS usuario, correo, rol, bloqueado FROM docentes';
+    
+    connection.query(queryAlumnos, (errAlumnos, resultsAlumnos) => {
+        if (errAlumnos) {
+            console.error('Error obteniendo datos de alumnos:', errAlumnos);
+            return res.status(500).send('Error del servidor');
+        }
+        
+        connection.query(queryDocentes, (errDocentes, resultsDocentes) => {
+            if (errDocentes) {
+                console.error('Error obteniendo datos de docentes:', errDocentes);
+                return res.status(500).send('Error del servidor');
+            }
+
+            // Combina los resultados de alumnos y docentes
+            const combinedResults = resultsAlumnos.concat(resultsDocentes);
+            
+            res.render('admin/u_admin', { email, tipo, users: combinedResults });
+        });
+    });
+});
+
+
+// Ruta para actualizar el estado del usuario
+// Ruta para actualizar el estado de un usuario
+app.post('/admin/u_admin', (req, res) => {
+    const { userEmail, status } = req.body;
+
+    if (!req.session.user) {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    const { tipo } = req.session.user;
+
+    if (tipo !== 'admin') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Actualiza el estado de un usuario en la base de datos
+    const query = `
+        UPDATE alumnos
+        SET bloqueado = ?
+        WHERE correo = ?
+        UNION
+        UPDATE docentes
+        SET bloqueado = ?
+        WHERE correo = ?
+    `;
+    connection.query(query, [status, userEmail, status, userEmail], (err) => {
+        if (err) {
+            console.error('Error actualizando el estado del usuario:', err);
+            return res.status(500).send('Error del servidor');
+        }
+        res.send('Estado del usuario actualizado');
+    });
+});
+
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // Consulta el usuario y verifica la contraseña
+    const query = 'SELECT * FROM alumnos WHERE correo = ? AND contrasena = ? UNION SELECT * FROM docentes WHERE correo = ? AND contrasena = ?';
+    connection.query(query, [email, password, email, password], (err, results) => {
+        if (err) {
+            console.error('Error en la consulta de inicio de sesión:', err);
+            return res.status(500).send('Error del servidor');
+        }
+
+        if (results.length > 0) {
+            const user = results[0];
+            if (user.bloqueado) {
+                return res.status(403).send('Cuenta bloqueada');
+            }
+
+            // Inicia sesión y redirige al usuario
+            req.session.user = {
+                email: user.correo,
+                tipo: user.rol
+            };
+            res.redirect('/dashboard'); // Redirige a la página de inicio
+        } else {
+            res.status(401).send('Credenciales incorrectas');
+        }
+    });
+});
+
+
+// Ruta para la vista de administración de usuarios
+app.get('/admin/s_admin', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'admin') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Renderiza la vista sin consultar la base de datos
+    res.render('admin/s_admin', { email, tipo });
+});
+
+app.get('/admin/e_admin', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+
+    const { email, tipo } = req.session.user;
+
+    if (tipo !== 'admin') {
+        return res.status(403).send('Acceso denegado');
+    }
+
+    // Renderiza la vista sin consultar la base de datos
+    res.render('admin/e_admin', { email, tipo });
+});
+
+
+
+
+
+
+// Ruta para obtener los usuarios filtrados por año y sección
+app.get('/filtrar-usuarios', (req, res) => {
+    const { año, seccion } = req.query;
+
+    // Consulta para filtrar por año y sección
+    let query = 'SELECT * FROM alumnos WHERE 1=1';
+    const queryParams = [];
+
+    if (año) {
+        query += ' AND año = ?';
+        queryParams.push(año);
+    }
+
+    if (seccion) {
+        query += ' AND seccion = ?';
+        queryParams.push(seccion);
+    }
+
+    connection.query(query, queryParams, (err, results) => {
+        if (err) {
+            console.error('Error al obtener los usuarios filtrados:', err);
+            return res.status(500).send('Error del servidor');
+        }
+
+        res.json(results);
+    });
+});
+
 
 // Ruta para manejar la inserción de nuevos usuarios
 app.post('/add-user', (req, res) => {
@@ -210,30 +474,30 @@ app.get('/admin/admin', (req, res) => {
 });
 
 // Ruta para manejar las solicitudes del chatbot
-app.post('/chat', async (req, res) => {
-    const userMessage = req.body.message;
+//app.post('/chat', async (req, res) => {
+    //const userMessage = req.body.message;
 
-    try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: 'gpt-3.5-turbo',
-            messages: [
-                { role: 'system', content: 'Eres Gloria, una paciente de terapia para la Universidad Gabriela Mistral.' },
-                { role: 'user', content: userMessage }
-            ],
-        }, {
-            headers: {
-                'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                'Content-Type': 'application/json'
-            }
-        });
+    //try {
+        //const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            //model: 'gpt-3.5-turbo',
+            //messages: [
+                //{ role: 'system', content: 'Eres Gloria, una paciente de terapia para la Universidad Gabriela Mistral.' },
+                //{ role: 'user', content: userMessage }
+            //],
+        //}, {
+           // headers: {
+             //   'Authorization': `Bearer ${OPENAI_API_KEY}`,
+               // 'Content-Type': 'application/json'
+            //}
+        //});
 
-        const botMessage = response.data.choices[0].message.content;
-        res.json({ reply: botMessage });
-    } catch (error) {
-        console.error('Error al comunicarse con la API de OpenAI:', error);
-        res.status(500).send('Error del servidor');
-    }
-});
+        //const botMessage = response.data.choices[0].message.content;
+        //res.json({ reply: botMessage });
+   // } catch (error) {
+     //   console.error('Error al comunicarse con la API de OpenAI:', error);
+       // res.status(500).send('Error del servidor');
+   // }
+//});
 
 
 app.listen(port, () => {
@@ -247,4 +511,9 @@ app.listen(port, () => {
             console.log('Conexión a la base de datos está funcionando.');
         }
     });
+});
+
+app.use((req, res, next) => {
+    console.log(`Ruta solicitada: ${req.url}`);
+    next();
 });

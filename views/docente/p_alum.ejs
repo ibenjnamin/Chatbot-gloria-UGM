@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma Simulaciones IA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-KDptv5fFo4y1Y7MHdj2ZcWcXdUdCPZ5+4CclD2p08G6xqptMDwzgVfJ15DlEVRcc0fM4wwDZV3XyZwz4L3L1YA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap");
+
+    body {
+      margin: 0;
+      font-family: "Open Sans";
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      background-color: #000;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .header .logo {
+      margin-left: 50px;
+    }
+
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 17px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .profile-button {
+      margin-left: auto;
+    }
+
+    .content {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .content h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .table-container {
+      margin-top: 60px;
+      width: 80%;
+    }
+
+    .table thead th {
+      background-color: #222;
+      color: white;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .table tbody tr {
+      background-color: #bdbaba;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .table th,
+    .table td {
+      border: 1px solid #ddd !important;
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      width: 100%;
+      margin-left: 0px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #e2e0e0;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      max-width: 600px;
+      border-radius: 10px;
+    }
+
+    .close {
+      color: #000;
+      margin-left: 96%;
+      font-size: 40px;
+      font-weight: bold;
+      margin-top: -10px;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .pagination-container a {
+      text-decoration: none;
+      width: 91px;
+      height: 36px;
+      display: inline-block;
+      text-align: center;
+      line-height: 36px;
+      border: 1px solid #555;
+      color: #000;
+      border-radius: 5px;
+    }
+
+    .pagination-container span {
+      font-size: 18px;
+    }
+
+    .sya a {
+      color: #000;
+      text-decoration: none;
+      height: 36px;
+      text-align: center;
+      align-items: center;
+      font-size: 18px;
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <img src="../imagenes/logo.png" alt="Logo" class="logo" width="163" height="43" />
+    <nav class="nav-links">
+      <a href="/docente/prof">Inicio</a>
+      <a href="/docente/p_alum">Alumnos</a>
+      <a href="/docente/p_est">Estadísticas</a>
+    </nav>
+    <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;" href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;" src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
+  </header>
+
+  <div style="display: flex; justify-content: space-between; gap: 20px; align-items: center;" class="container">
+    <div class="form-group" style="display: flex; align-items: center; margin-top: 20px;">
+      <h3 style="font-size: 15px; margin: 0; margin-right: 20px;">Seleccionar</h3>
+      <select  name="años" id="años" class="form-control" style="background-color: #706F6F; color: #fff;">
+        <option style="color: #fff;" value="">Año Académico</option>
+        <option style="color: #fff;" value="2023">2023</option>
+        <option style="color: #fff;" value="2024">2024</option>
+        <!-- Agrega más años según sea necesario -->
+      </select>
+    </div>
+  
+    <div class="form-group" style="display: flex; align-items: center; margin-top: 20px;">
+      <h3 style="font-size: 15px; margin: 0; margin-right: 20px;">Filtrar por</h3>
+      <select style="background-color: #706F6F; color: #fff;" name="filtro" id="filtro" class="form-control">
+        <option style="color: #fff;" value="">Sección</option>
+        <option style="color: #fff;" value="A">A</option>
+        <option style="color: #fff;" value="B">B</option>
+        <!-- Agrega más secciones según sea necesario -->
+      </select>
+    </div>
+  </div>
+  
+
+  <div class="container table-container">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Estudiante</th>
+              <th>Correo</th>
+              <th>N° sesión</th>
+              <th>N° Pacientes</th>
+              <th>Ver</th>
+          </tr>
+      </thead>
+      <tbody>
+          <% alumnos.forEach(alumno => { %>
+              <tr>
+                  <td><%= alumno.nombre %></td>
+                  <td><%= alumno.correo %></td>
+                  <td>0</td> <!-- Valor fijo en 0 -->
+                  <td>0</td> <!-- Valor fijo en 0 -->
+                  <td>
+                      <a href="#" class="view-button">
+                          <img style="margin-left: 5px" src="../imagenes/veeer.png" alt="Ver" />
+                      </a>
+                  </td>
+              </tr>
+          <% }); %>
+      </tbody>
+  </table>
+    <div class="pagination-container sya">
+        <a style="text-decoration: none; width: 91px; height: 36px" href="#">Anterior</a>
+        <span>página 1 de 10</span>
+        <a href="#">Siguiente</a>
+    </div>
+</div>
+
+
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Historial Conversaciones</h2>
+      <ul>
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 130px" src="../imagenes/descargar.png" alt="ver" />
+        </li>
+        <hr style="background-color: #000" />
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+          <hr style="background-color: #000" />
+        </li>
+
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+          <hr style="background-color: #000" />
+        </li>
+
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+          <hr style="background-color: #000" />
+        </li>
+
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+          <hr style="background-color: #000" />
+        </li>
+
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+          <hr style="background-color: #000" />
+        </li>
+
+        <li>
+          Conversación 10/08/2024
+          <img style="margin-left: 40px" src="../imagenes/buscar.png" alt="" />
+          <img style="margin-left: 65px" src="../imagenes/descargar.png" alt="ver" />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"
+    integrity="sha384-vlAigWd8j47Vq1a0d4N7puj/1oG8o14Uj7l5HdHx18ZD1hLsjk1bEkhgYFgi+qEAI"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-+0n0xVW2eSR5RvJ8tKuI79Pq5S2GfeQ8S9bAPtKG5Kk9giq/zTpXQJqtxAuP4+vn"
+    crossorigin="anonymous"></script>
+  <script>
+    // modal
+    var modal = document.getElementById("myModal");
+
+    // botón que abre el modal
+    var btns = document.getElementsByClassName("view-button");
+
+    // elemento <span> que cierra el modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Cuando el usuario hace clic en el botón, abre el modal
+    for (let btn of btns) {
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+    }
+
+    // Cuando el usuario hace clic en <span> (x) cierra el modal
+    span.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // Cuando el usuario hace clic fuera del modal cierra el modal
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+
+  <script>
+    const selectAños = document.getElementById('años');
+    const selectFiltro = document.getElementById('filtro');
+
+    selectAños.addEventListener('change', filterTable);
+    selectFiltro.addEventListener('change', filterTable);
+
+    function filterTable() {
+      const selectedAño = selectAños.value.toLowerCase();
+      const selectedSeccion = selectFiltro.value.toLowerCase();
+      const rows = document.querySelectorAll('#data-table tr');
+
+      rows.forEach(row => {
+        const año = row.cells[4].textContent.toLowerCase();
+        const seccion = row.cells[5].textContent.toLowerCase();
+
+        if ((selectedAño === "" || año.includes(selectedAño)) &&
+          (selectedSeccion === "" || seccion.includes(selectedSeccion))) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  </script>
+  <script>
+    document.getElementById('años').addEventListener('change', filtrarUsuarios);
+    document.getElementById('filtro').addEventListener('change', filtrarUsuarios);
+
+    function filtrarUsuarios() {
+        const año = document.getElementById('años').value;
+        const seccion = document.getElementById('filtro').value;
+
+        // Realizar la solicitud al servidor
+        fetch(`/filtrar-usuarios?año=${año}&seccion=${seccion}`)
+            .then(response => response.json())
+            .then(data => {
+                // Aquí puedes actualizar la lista de usuarios en el DOM con los datos filtrados
+                console.log(data); // Para fines de depuración
+                // Ejemplo de cómo podrías actualizar una lista de usuarios en tu HTML:
+                const userList = document.getElementById('user-list');
+                userList.innerHTML = ''; // Limpiar la lista anterior
+                data.forEach(user => {
+                    const li = document.createElement('li');
+                    li.textContent = `${user.nombre} - Sección: ${user.seccion} - Año: ${user.año}`;
+                    userList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error al filtrar usuarios:', error));
+    }
+</script>
+
+</body>
+
+</html>

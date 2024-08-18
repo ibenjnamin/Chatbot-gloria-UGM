@@ -97,7 +97,6 @@
         background-color: #222;
         color: white;
         padding: 10px;
-        text-align: center; /* Centra el texto en los encabezados */
       }
       .custom-table tbody tr {
         background-color: white;
@@ -125,20 +124,6 @@
         margin-top: 20px;
         width: 100%;
         margin-left: 0px;
-      }
-      .pagination-container a {
-        text-decoration: none;
-        width: 91px;
-        height: 36px;
-        display: inline-block;
-        text-align: center;
-        line-height: 36px;
-        background-color: #555;
-        color: #fff;
-        border-radius: 5px;
-      }
-      .pagination-container span {
-        font-size: 18px;
       }
       .modal {
         display: none;
@@ -174,16 +159,29 @@
         text-decoration: none;
         cursor: pointer;
       }
-      .sya a {
-        color: #fff;
-        text-decoration: none;
-        color: rgba(208, 213, 221, 1);
-        height: 36px;
-        text-align: center;
-        align-items: center;
-        font-size: 18px;
-        width: 100px;
-      }
+      .pagination-container a {
+            text-decoration: none;
+            width: 91px;
+            height: 36px;
+            display: inline-block;
+            text-align: center;
+            line-height: 36px;
+            border: 1px solid #555;
+            color: #000;
+            border-radius: 5px;
+        }
+        .pagination-container span {
+            font-size: 18px;
+        }
+        .sya a {
+            color: #000;
+            text-decoration: none;
+            height: 36px;
+            text-align: center;
+            align-items: center;
+            font-size: 18px;
+            width: 100px;
+        }
       .block-container {
         display: flex;
         justify-content: center;
@@ -196,57 +194,23 @@
         align-items: center;
         gap: 5px;
       }
-      .toggle-buttons {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-        margin-left: 50px;
-        margin-bottom: 10px;
-      }
-      .toggle-buttons button {
-        padding: 10px 20px;
-        border: 2px solid #000;
-        background-color: #fff;
-        color: #000;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      .toggle-buttons button:hover {
-        background-color: #000;
-        color: #fff;
-      }
-      .table-container {
-        position: relative;
-      }
-      .table-container table {
-        width: 100%;
-      }
     </style>
   </head>
   <body>
     <header class="header">
       <img src="../imagenes/logo.png" alt="Logo" class="logo" width="163" height="43" />
       <nav class="nav-links">
-        <a href="../admin/admin.ejs">Inicio</a>
-        <a href="../admin/u_admin.html">Usuarios</a>
-        <a href="../admin/s_admin.html">Secciones</a>
-        <a href="../admin/e_admin.html">Estadísticas</a>
+        <a href="/docente/prof">Inicio</a>
+        <a href="/docente/p_alum">Alumnos</a>
+        <a href="/docente/p_est">Estadísticas</a>
       </nav>
       <a style="text-decoration: none; background-color: #555; text-align: center; border-radius: 10px; align-items: center; width: 150px; height: 30px; color: #fff;" href="../index.html" class="profile-button"><img style="width: 17.38px; margin-right: 5px; height: 16.65px;" src="../imagenes/cerrarsesion.png" alt="">Cerrar Sesion</a>
     </header>
-
-    <!-- Toggle buttons -->
-    <div class="toggle-buttons" style="margin-top: 20px;">
-      <button onclick="showTable('docentes')">Docentes</button>
-      <button onclick="showTable('estudiantes')">Estudiantes</button>
-    </div>
-
-    <div id="docentes" class="table-container">
+    <div class="table-container">
       <table class="custom-table">
         <thead>
           <tr>
-            <th>Docente</th>
+            <th>Estudiante</th>
             <th>Ingresos</th>
             <th>Horas</th>
             <th>Pacientes</th>
@@ -255,69 +219,46 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Jaime Pérez</td>
-            <td>14</td>
-            <td>30</td>
-            <td>12</td>
-            <td>24</td>
-            <td>
-              <div class="sya">
-                <a href="#">Consultas</a>
-              </div>
-              <div class="sya">
-                <a href="#">Registros</a>
-              </div>
-            </td>
-          </tr>
-          <!-- Más filas aquí -->
+          <% alumnos.forEach(alumno => { %>
+            <tr>
+              <td><%= alumno.nombre %></td>
+              <td>0</td> <!-- Valor fijo en 0 -->
+              <td>0</td> <!-- Valor fijo en 0 -->
+              <td>0</td> <!-- Valor fijo en 0 -->
+              <td>0</td> <!-- Valor fijo en 0 -->
+              <td>
+                <div class="gray-block">Carmen</div>
+                <div class="gray-block">David</div>
+                <div class="gray-block">Gregorio</div>
+                <div class="gray-block">Manuel</div>
+                <div class="gray-block">Cristina</div>
+                <div class="gray-block">Renata</div>
+              </td>
+            </tr>
+          <% }); %>
         </tbody>
-      </table>
+    </table>
+      <div class="pagination-container">
+        <a href="#" class="previous">Anterior</a>
+        <span>Pagina 1 de 1</span>
+        <a href="#" class="next">Siguiente</a>
+      </div>
     </div>
-
-    <div id="estudiantes" class="table-container" style="display: none;">
-      <table class="custom-table">
-        <thead>
-          <tr>
-            <th>Estudiante</th>
-            <th>Estudio</th>
-            <th>Promedio</th>
-            <th>Horas</th>
-            <th>Fichas</th>
-            <th>IA Consultadas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Lucía González</td>
-            <td>Medicina</td>
-            <td>6.5</td>
-            <td>15</td>
-            <td>18</td>
-            <td>
-              <div class="sya">
-                <a href="#">Consultas</a>
-              </div>
-              <div class="sya">
-                <a href="#">Registros</a>
-              </div>
-            </td>
-          </tr>
-          <!-- Más filas aquí -->
-        </tbody>
-      </table>
-    </div>
-
+    <div id="myModal" class="modal">
     <script>
-      function showTable(tableId) {
-        document.getElementById('docentes').style.display = tableId === 'docentes' ? 'block' : 'none';
-        document.getElementById('estudiantes').style.display = tableId === 'estudiantes' ? 'block' : 'none';
-      }
-    </script>
+      // Modal
+      var modal = document.getElementById("myModal");
+      var span = document.getElementsByClassName("close")[0];
 
-    <!-- Scripts de Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zySZZS5iD6G/Z5nLkl52+W4p6bDJ7z8k7z61KlFz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9zrCakU1fT1SZ4J1gJ3jw8AO5ae3D5/kYY+3hKX1leD4xOeQIgB" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
   </body>
 </html>

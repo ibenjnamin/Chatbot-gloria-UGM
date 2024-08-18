@@ -15,6 +15,7 @@
 
         .left-side {
             background-color: #000000;
+            /* Color de fondo del lado izquierdo */
             width: 360px;
             min-height: 100vh;
             color: white;
@@ -22,6 +23,7 @@
             flex-direction: column;
             align-items: center;
             padding-top: 50px;
+            /* Espacio superior para centrar la imagen */
         }
 
         .left-side img {
@@ -94,6 +96,17 @@
             text-align: left;
         }
 
+        .hacerhoy {
+            height: 43px;
+            margin-top: 10px;
+            gap: 0px;
+            opacity: 0px;
+            font-family: "Roboto Slab";
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 36.93px;
+        }
+
         .bienvenida span {
             font-family: "Roboto Slab";
             font-size: 35px;
@@ -117,65 +130,40 @@
 
         .caja {
             display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            margin-top: 30px;
-            /* Incrementar para separarlos más de la línea de tiempo */
-            flex-direction: row;
-            width: 100%;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
         }
 
         .box {
-            width: 150px;
-            height: 100px;
+            width: 250px;
+            height: 264px;
             background-color: rgba(217, 217, 217, 1);
-            border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             margin: 0 10px;
-            padding: 10px;
+            padding: 20px;
+        }
+
+        .box h3 {
+            margin-top: -10px;
             text-align: center;
+            width: 100%;
+            font-family: "Open Sans";
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 21.79px;
+            margin-bottom: 20px;
         }
 
         .box p {
+            text-align: center;
             font-family: "Open Sans";
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 18px;
-            margin: 0;
-        }
-
-        .timeline {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 40px 0;
-            width: 100%;
-        }
-
-        .circle {
-            width: 30px;
-            height: 30px;
-            background-color: #000;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-family: "Open Sans";
-        }
-
-        .line {
-            width: 100px;
-            /* Ancho reducido para acercar los números */
-            height: 2px;
-            background-color: black;
-            margin: 0 1px;
-            /* Reducido para disminuir la separación */
+            line-height: 19.07px;
         }
     </style>
 </head>
@@ -183,44 +171,49 @@
 <body>
     <div class="container-fluid">
         <div class="row">
+            <!-- Lado Izquierdo -->
             <div class="col-md-3 left-side">
                 <img style="margin-top: 20px" src="../imagenes/Logo.png" alt="Logo" />
+                <!-- Enlaces -->
                 <div class="nbvar">
                     <div class="inicio">
-                        <a href="../alumno/home.ejs">
+                        <a href="/alumno/home">
                             <img src="../imagenes/inicio.png" alt="Inicio" />Inicio
                         </a>
                     </div>
                     <div class="conversacion">
-                        <a href="../alumno/chat.html">
+                        <a href="/alumno/chat">
                             <img src="../imagenes/conversacion.png" alt="Conversación" />Conversación
                         </a>
                     </div>
                     <div class="paciente">
-                        <a href="/paciente.html">
+                        <a href="/paciente.ejs">
                             <img src="../imagenes/paciente.png" alt="Paciente" />Paciente IA
                         </a>
                     </div>
                     <div class="historial">
-                        <a href="../alumno/historial.html">
+                        <a href="/alumno/historial">
                             <img src="../imagenes/historial.png" alt="Historial" />Historial
                         </a>
                     </div>
                     <div class="plantilla">
-                        <a href="/plantilla.html">
+                        <a href="/plantilla">
                             <img src="../imagenes/plantilla.png" alt="Plantilla" />Plantilla
                         </a>
                     </div>
                     <div class="evaluacion">
-                        <a href="../alumno/evaluacion.html">
+                        <a href="/alumno/evaluacion">
                             <img src="../imagenes/evaluacionf.png" alt="Evaluación" />Evaluación
                         </a>
                     </div>
                 </div>
             </div>
+            <!-- Contenido -->
             <div class="col-md-9 d-flex flex-column align-items-center justify-content-center">
                 <h1 class="bienvenida">
-                    Evaluación Final
+                    Bienvenido(a), <span>
+                        <%= nombre %>
+                    </span>
                 </h1>
                 <div class="container" style="max-width: 700px;">
                     <p style="text-align: center; margin-top: 50px; font-family: 'Open Sans'; font-size: 13;">Hola aquí,
@@ -229,37 +222,39 @@
                         facetas de la psicología.</p>
 
                     <div class="hacerhoy">
-                        <h2 style="text-align: center; font-size: 20px">Antes de comenzar recuerda</h2>
-                    </div>
-
-                    <div class="timeline">
-                        <div class="circle">1</div>
-                        <div class="line"></div>
-                        <div class="circle">2</div>
-                        <div class="line"></div>
-                        <div class="circle">3</div>
+                        <h2 style="text-align: center;">¿Que quieres hacer hoy?</h2>
                     </div>
                 </div>
                 <div class="caja">
                     <div class="box">
+                        <h3>Continuar ultima conversación realizada</h3>
                         <p>
-                            Tendrás un paciente elegido al azar
+                            Interactúa con perfiles de pacientes cuidadosamente diseñados que presentan una variedad de
+                            temas y trastornos.
                         </p>
                     </div>
                     <div class="box">
+                        <h3>iniciar nueva cita con pacientes fichados </h3>
                         <p>
-                            Tendrás 10 minutos para interactuar con el paciente
+                            Mejora tus habilidades terapéuticas mediante sesiones simuladas con nuestra IA, ajustada
+                            para reflejar diferentes enfoques y estilos de terapia.
                         </p>
                     </div>
                     <div class="box">
+                        <h3>Iniciar una conversación con paciente al azar</h3>
                         <p>
-                            Se evaluará tu capacidad de diagnóstico y manejo de la sesión
+                            Recibe comentarios detallados y análisis de tus interacciones para ayudarte a crecer y
+                            aprender.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Archivos JS de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
