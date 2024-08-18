@@ -183,13 +183,14 @@
 
   <div style="display: flex; justify-content: space-between; gap: 20px; align-items: center;" class="container">
     <div class="form-group" style="display: flex; align-items: center; margin-top: 20px;">
-      <h3 style="font-size: 15px; margin: 0; margin-right: 20px;">Seleccionar</h3>
-      <select  name="años" id="años" class="form-control" style="background-color: #706F6F; color: #fff;">
-        <option style="color: #fff;" value="">Año Académico</option>
-        <option style="color: #fff;" value="2023">2023</option>
-        <option style="color: #fff;" value="2024">2024</option>
-        <!-- Agrega más años según sea necesario -->
-      </select>
+        <h3 style="font-size: 15px; margin: 0; margin-right: 20px;">Seleccionar</h3>
+        <select name="años" id="años" class="form-control" style="background-color: #706F6F; color: #fff;">
+            <option style="color: #fff;" value="">Año Académico</option>
+            <option style="color: #fff;" value="todos">Todos</option> <!-- Opción para ver todos los años -->
+            <option style="color: #fff;" value="2023">2023</option>
+            <option style="color: #fff;" value="2024">2024</option>
+            <!-- Agrega más años según sea necesario -->
+        </select>
     </div>
   
     <div class="form-group" style="display: flex; align-items: center; margin-top: 20px;">
@@ -384,7 +385,18 @@
             .catch(error => console.error('Error al filtrar usuarios:', error));
     }
 </script>
-
+<script>
+  document.getElementById('años').addEventListener('change', function() {
+      const selectedYear = this.value;
+      const url = new URL(window.location.href);
+      if (selectedYear) {
+          url.searchParams.set('años', selectedYear);
+      } else {
+          url.searchParams.delete('años');
+      }
+      window.location.href = url.toString();
+  });
+</script>
 </body>
 
 </html>

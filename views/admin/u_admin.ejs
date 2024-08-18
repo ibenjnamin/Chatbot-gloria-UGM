@@ -293,7 +293,7 @@
     <button type="button" data-toggle="modal" data-target="#addUserModal">
       Agregar usuario
     </button>
-    <button>Carga Masiva</button>
+    <button id="download-button">Carga Masiva</button>
     <input type="text" id="search" placeholder="Buscar por usuario o correo...">
   </div>
 
@@ -400,17 +400,43 @@
           const email = event.target.getAttribute('data-email');
           const status = event.target.checked;
 
-          fetch('/admin/u_admin', {
+          fetch('/admin/update-user-status', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ userEmail: email, status: status.toString() })
           })
-          .then(response => response.text())
-          .then(data => alert(data))
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  alert(data.message);
+              } else {
+                  alert('Error: ' + data.message);
+              }
+          })
           .catch(error => console.error('Error:', error));
       });
   });
 </script>
+<script>
+  document.getElementById('download-button').addEventListener('click', function() {
+      fetch('/download-excel')
+          .then(response => response.blob())
+          .then(blob => {
+              // Crear un enlace para la descarga
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'mi_archivo.xlsx';
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+          })
+          .catch(error => console.error('Error al descargar el archivo:', error));
+  });
+</script>
+</script>
+
 </body>
 
 </html>
