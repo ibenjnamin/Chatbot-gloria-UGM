@@ -18,7 +18,7 @@ const upload = multer({ dest: 'uploads/' });
 
 
 // Configura tu API Key aquí
-//const OPENAI_API_KEY = 'sk-proj-tL4vs4CwQg38LS92aHt5T3BlbkFJ3bmgAIw5ZDgIRueMbUam';
+const OPENAI_API_KEY = 'sk-proj-tL4vs4CwQg38LS92aHt5T3BlbkFJ3bmgAIw5ZDgIRueMbUam';
 
 // Configurar el motor de vistas EJS
 app.set('view engine', 'ejs');
@@ -39,32 +39,55 @@ app.use(session({
 
 // Ruta para manejar la carga de archivos Excel
 app.get('/download-excel', (req, res) => {
-    // Crear un libro de trabajo y una hoja de cálculo
-    const wb = XLSX.utils.book_new();
-    const ws_data = [
-        ['Columna1', 'Columna2'],
-        ['Valor1', 'Valor3'],
-        ['Valor2', 'Valor4'],
-    ];
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+    // Realizar la consulta para obtener datos de alumnos y docentes
+    const query = `
+        SELECT 'Alumno' AS tipo, nombre, correo, rol, bloqueado 
+        FROM alumnos 
+        UNION ALL 
+        SELECT 'Docente' AS tipo, nombre, correo, rol, bloqueado 
+        FROM docentes
+    `;
 
-    // Generar el archivo Excel en memoria
-    const filePath = path.join(__dirname, 'mi_archivo.xlsx');
-    XLSX.writeFile(wb, filePath);
-
-    // Enviar el archivo como respuesta
-    res.download(filePath, 'mi_archivo.xlsx', (err) => {
-        if (err) {
-            console.error(err);
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Error al obtener los datos:', error);
+            res.status(500).send('Error al obtener los datos');
+            return;
         }
 
-        // Eliminar el archivo después de enviar
-        fs.unlink(filePath, (unlinkErr) => {
-            if (unlinkErr) {
-                console.error(unlinkErr);
-            }
+        // Crear un libro de trabajo y una hoja de cálculo
+        const wb = XLSX.utils.book_new();
+        
+        // Crear los datos para la hoja de cálculo
+        const ws_data = [
+            ['Tipo', 'Usuario', 'Correo', 'Rol', 'Establecimiento', 'Estado']
+        ];
+
+        // Agregar los datos de alumnos y docentes a la hoja
+        results.forEach(row => {
+            ws_data.push([
+                row.tipo,
+                row.nombre,
+                row.correo,
+                row.rol,
+                'Universidad Gabriela Mistral', // Valor fijo según tu ejemplo
+                row.bloqueado ? 'Bloqueado' : 'Activo'
+            ]);
         });
+
+        // Convertir los datos a una hoja de cálculo
+        const ws = XLSX.utils.aoa_to_sheet(ws_data);
+        XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
+
+        // Escribir el archivo en un buffer
+        const buffer = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+
+        // Establecer las cabeceras para descargar el archivo
+        res.setHeader('Content-Disposition', 'attachment; filename="usuarios.xlsx"');
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        // Enviar el archivo
+        res.send(buffer);
     });
 });
 
@@ -561,7 +584,7 @@ app.get('/admin/admin', (req, res) => {
     });
 });
 
- Ruta para manejar las solicitudes del chatbot
+ //Ruta para manejar las solicitudes del chatbot
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
 
