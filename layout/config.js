@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'ugm-gloria-ia'
+    database: 'ugm-gloria-ia',
 });
 
 connection.connect((err) => {

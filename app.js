@@ -9,6 +9,7 @@ const axios = require('axios');
 const multer = require('multer');  // Agregado para manejar archivos
 const XLSX = require('xlsx');
 const fs = require('fs');
+require('dotenv').config();
 
 
 const app = express();
@@ -18,7 +19,8 @@ const upload = multer({ dest: 'uploads/' });
 
 
 // Configura tu API Key aquí
-const OPENAI_API_KEY = 'sk-proj-tL4vs4CwQg38LS92aHt5T3BlbkFJ3bmgAIw5ZDgIRueMbUam';
+const OPENAI_API_KEY = process.env.API_KEY;
+
 
 // Configurar el motor de vistas EJS
 app.set('view engine', 'ejs');
@@ -124,7 +126,7 @@ app.post('/auth/login', (req, res) => {
 // Ruta para obtener los datos del usuario y renderizar la vista correspondiente
 app.get('/alumno/home', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -155,7 +157,7 @@ app.get('/alumno/home', (req, res) => {
 
 app.get('/alumno/chat', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -165,7 +167,7 @@ app.get('/alumno/chat', (req, res) => {
 // Ruta para la vista de historial
 app.get('/alumno/historial', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -175,7 +177,7 @@ app.get('/alumno/historial', (req, res) => {
 // Ruta para la vista de evaluación
 app.get('/alumno/evaluacion', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -186,7 +188,7 @@ app.get('/alumno/evaluacion', (req, res) => {
 // Ruta para la vista de profesor
 app.get('/docente/prof', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -215,7 +217,7 @@ app.get('/docente/prof', (req, res) => {
 // Ruta para la vista de panel de alumnos
 app.get('/docente/p_alum', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -240,7 +242,7 @@ app.get('/docente/p_alum', (req, res) => {
 // Ruta para la vista de panel de estadísticas
 app.get('/docente/p_est', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -264,7 +266,7 @@ app.get('/docente/p_est', (req, res) => {
 // Ruta para la vista principal del administrador
 app.get('/admin', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -294,7 +296,7 @@ app.get('/admin', (req, res) => {
 // Ruta para la vista de gestión de usuarios en el administrador
 app.get('/admin/u_admin', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -386,7 +388,7 @@ app.get('/admin/u_admin', (req, res) => {
 // Ruta para la vista de administración de usuarios
 app.get('/admin/s_admin', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -401,7 +403,7 @@ app.get('/admin/s_admin', (req, res) => {
 
 app.get('/admin/e_admin', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.redirect('glor-ia.com/');
     }
 
     const { email, tipo } = req.session.user;
@@ -592,7 +594,7 @@ app.post('/chat', async (req, res) => {
         const response = await axios.post('https:api.openai.com/v1/chat/completions', {
             model: 'gpt-3.5-turbo',
             messages: [
-                { role: 'system', content: 'Eres Gloria, una paciente de terapia para la Universidad Gabriela Mistral.' },
+                { role: 'system', content: 'Gloria es una mujer de 30 años, divorciada. Gloria busca ayuda para entender y manejar sus sentimientos de culpa, ansiedad y autoexigencia. Durante sus sesiones de terapia, muestra vulnerabilidad y es abierta sobre sus luchas internas.' },
                 { role: 'user', content: userMessage }
             ],
         }, {
@@ -612,7 +614,7 @@ app.post('/chat', async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Servidor Node.js escuchando en http://localhost:${port}`);
+    console.log(`Servidor Node.js escuchando enlocalhsot@${port}`);
 
     // Test de conexión a la base de datos
     connection.query('SELECT 1 + 1 AS solución', (err, results) => {
