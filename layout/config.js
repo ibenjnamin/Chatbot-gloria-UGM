@@ -1,10 +1,10 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-    host: 'p3plzcpnl50750', // Cambia esto por el host real de GoDaddy si es diferente
-    user: 'AdminUgmia',     // Tu usuario de base de datos
-    password: 'benjadar27122002', // Cambia esto por la contraseña real
-    database: 'ugm-gloria-ia' // Nombre de tu base de datos
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'ugm-gloria-ia',
 });
 
 connection.connect((err) => {
