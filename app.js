@@ -12,7 +12,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -358,6 +358,9 @@ app.post('/formulario', (req, res) => {
     );
 });
 
-app.listen(port, () => {
-    console.log(`Servidor escuchando en ${port}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
