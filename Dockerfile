@@ -13,6 +13,10 @@ RUN npm install
 # Copia todos los archivos del proyecto en el contenedor
 COPY . .
 
+# Asegura permisos correctos
+RUN chown -R node:node /app
+USER node
+
 # Expone el puerto en el que tu aplicación va a correr
 EXPOSE 3000
 
